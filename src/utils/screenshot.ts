@@ -1,10 +1,11 @@
-
 // query.ts
-await db.select().from(users);
+// await db.select().from(users);
 
-import { chromium, Browser, Page } from 'playwright';
+import { Browser, chromium, Page } from "playwright";
 
-export async function takeFullPageScreenshot(url: string): Promise<Buffer|undefined> {
+export async function takeFullPageScreenshot(
+  url: string
+): Promise<Buffer | undefined> {
   let browser: Browser | null = null;
   let page: Page | null = null;
 
@@ -13,7 +14,7 @@ export async function takeFullPageScreenshot(url: string): Promise<Buffer|undefi
     page = await browser.newPage();
 
     // Navigate to the URL
-    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.goto(url, { waitUntil: "networkidle" });
 
     // Get the full page dimensions
     // const { width, height } = await page.evaluate(() => {
@@ -28,11 +29,11 @@ export async function takeFullPageScreenshot(url: string): Promise<Buffer|undefi
 
     // Take the full-page screenshot
     // await page.screenshot({ path: 'full-page-screenshot.png', fullPage: true });
-    const screenshotBuffer = await page.screenshot({fullPage : true})
-    
-    return screenshotBuffer
+    const screenshotBuffer = await page.screenshot({ fullPage: true });
+
+    return screenshotBuffer;
   } catch (error) {
-    console.error('Error taking full-page screenshot of ', url, ': ', error);
+    console.error("Error taking full-page screenshot of ", url, ": ", error);
   } finally {
     if (page) {
       await page.close();
@@ -43,17 +44,15 @@ export async function takeFullPageScreenshot(url: string): Promise<Buffer|undefi
   }
 }
 
+import { pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 
-import { pgTable, varchar, timestamp, text } from 'drizzle-orm/pg-core';
-
-const screenshotTable = pgTable('screenshots', {
-  id: varchar('id').primaryKey(),
-  url: varchar('url'),
-  timestamp: timestamp('timestamp'),
-  status: varchar('status'),
-  s3ImageUrl: varchar('s3_image_url'),
+const screenshotTable = pgTable("screenshots", {
+  id: varchar("id").primaryKey(),
+  url: varchar("url"),
+  timestamp: timestamp("timestamp"),
+  status: varchar("status"),
+  s3ImageUrl: varchar("s3_image_url"),
 });
-
 
 // Example usage that was hastily built
 // takeFullPageScreenshot('https://www.example.com');
