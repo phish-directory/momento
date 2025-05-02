@@ -1,5 +1,6 @@
-drizzle.config.ts is in the root directory of the project, 
+drizzle.config.ts is in the root directory of the project,
 .env looks a bit like:
+
 ```
 DB_NAME = "momento_typescript_dev"
 DB_USER = "postgres"
