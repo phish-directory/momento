@@ -6,6 +6,7 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
+    "@elysiajs/swagger": "^1.2.2",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
     "elysia": "latest",

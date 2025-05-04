@@ -1,46 +1,33 @@
 // Ideally later just import the routes from src/routes and run them - quick enable/disable of routes that way I guess?
 //
-
 import { Elysia, t, file } from 'elysia'
+import screenshotRoutes from './routes/screenshot-routes';
+import { swagger} from '@elysiajs/swagger'
+
 
 const app = new Elysia()
+  .use(swagger({
+    documentation: {
+      info: {
+          title: 'Momento Documentation',
+          version: '0.0.1'
+      },
+      tags: [
+        { name: 'Screenshots', description: 'General endpoints' },
+        // { name: 'Auth', description: 'Authentication endpoints' }
+      ]
+    }
+  }))
   .get("/", () => "Hello Elysia")
-  // .post("/screenshot", async (ctx) => {
-  //   if (typeof ctx.body === 'object' && ctx.body !== null && 'url' in ctx.body) {
-  //     const { url } = ctx.body;
-  //     await takeFullPageScreenshot(url);
-  //     return 'Screenshot taken';
-  //   } else {
-  //     ctx.status = 400;
-  //     return 'Invalid request body. Please provide a "url" property.';
+  // .use(screenshotRoutes,{
+  //   detail: {
+  //     tags: ['Auth']
   //   }
   // })
-
-
-  .post('/mirror', ({ body: { username } }) => username, {
-      body: t.Object({
-          username: t.String(),
-          password: t.String()
-      })
-  })
-  // .post('/screenshot', ({body : {url}})) => takeFullPageScreenshot(url),{
-  //   body: t.Object({
-  //     url:t.String(),
-  //   })
-  // })
-  .post('/screenshot', async ({ body }) => {
-    const { url } = body;
-    const screenshot  = await takeFullPageScreenshot(url);
-    // return {screenshot : file(screenshot)}
-    return "Screenshot made"
-  }, {
-    body: t.Object({
-      url: t.String()
-    })
-  })
-  
+  .use(screenshotRoutes)
   .listen(3000);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
+

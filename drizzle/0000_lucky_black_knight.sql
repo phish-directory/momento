@@ -1,7 +1,7 @@
 CREATE TABLE "screenshots" (
-	"id" integer PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY NOT NULL,
 	"url" varchar NOT NULL,
 	"timestamp" timestamp NOT NULL,
-	"status" varchar NOT NULL,
+	"status" varchar,
 	"s3_url" varchar
 );
